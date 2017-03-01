@@ -29,6 +29,9 @@ const contactRoutes = require('./services/contacts/contactRoutes');
 const userRoutes = require('./services/users/userRoutes')(passport);
 const orgRoutes = require('./services/org/orgRoutes');
 
+// Seneca microservices..
+const math = require('./microservices/math')(app);
+//app.use(math.router);
 
 // REST Gateways
 app.get('/', (req, res) => {
