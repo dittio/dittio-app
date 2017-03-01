@@ -23,15 +23,13 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }), bodyParser.json());
 app.use(express.static(path.join(__dirname, '../src')));
 
-
 // Service-based routing import
 const contactRoutes = require('./services/contacts/contactRoutes');
 const userRoutes = require('./services/users/userRoutes')(passport);
 const orgRoutes = require('./services/org/orgRoutes');
 
 // Seneca microservices..
-const math = require('./microservices/math')(app);
-//app.use(math.router);
+const math = require('./microservices/mathRoute')(app);
 
 // REST Gateways
 app.get('/', (req, res) => {
