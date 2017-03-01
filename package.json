@@ -60,6 +60,7 @@
     "redux": "^3.6.0",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0",
-    "sendgrid": "^4.7.1"
+    "sendgrid": "^4.7.1",
+    "seneca": "^3.3.0"
   }
 }

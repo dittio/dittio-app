@@ -27,6 +27,9 @@ app.use(express.static(path.join(__dirname, '../src')));
 const contactRoutes = require('./services/contacts/contactRoutes');
 const userRoutes = require('./services/users/userRoutes')(passport);
 
+// Seneca microservices..
+const math = require('./microservices/math')(app);
+//app.use(math.router);
 
 // REST Gateways
 app.get('/', (req, res) => {
