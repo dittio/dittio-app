@@ -1,16 +1,9 @@
-module.exports = function(app, router) {
-   let seneca = require('seneca')();
+module.exports = function math(options) {
 
-   router.register({
-         mathLib: "/math/:p1/:p2"
-   },
-
-   seneca.add('role:web,route:mathLib', (msg, resp) => {
-      var answer = parseFloat(msg.params.p1) + parseFloat(msg.params.p2);
-      msg.response.send('{answer: ' + answer + "}");
-   })
-   );
-
-   app.use(router);
+   this.add({role:'web',cmd:'add'}, (msg, resp) => {
+      var answer = parseFloat(msg.p1) + parseFloat(msg.p2);
+      console.log('Sending: ' + answer);
+      resp(null, {answer:answer});
+   });
 }
 
