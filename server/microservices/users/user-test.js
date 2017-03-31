@@ -28,7 +28,7 @@ function test_add_user() {
   //    console.log("Saved user with id [" + added_user.id + "]");
   //  }
   //);
-  seneca.act('role:user,cmd:add,email:a@b.com,password:abc,first_name:a,last_name:b', function(err, user) {
+  seneca.act('role:user,cmd:add, data:{email:a@b.com,password:abc,first_name:a,last_name:b}', function(err, user) {
     if(err) console.error(err);
     console.log("Added new user with id [" + user.id + "]");
   });
