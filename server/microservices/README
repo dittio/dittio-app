@@ -1,0 +1,11 @@
+This is the directory for creating microservices. Ideally, we should have one directory per microservice. The corresponding test files should be in the "test" directory, that is currently in the "microservices-test" directory.
+
+Once the microservices are launched from the command line, they can be tested from the command line by something like:
+
+>curl 'http://localhost:3000/math/add/3/4'
+
+for the 'Math' microservice, which should give us a response similar to:
+
+{"answer":7}
+
+More comprehensive tests should be run as an entire test suite from the microservices-test/math directory, for the 'Math" microservice etc.
