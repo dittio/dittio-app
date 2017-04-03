@@ -5,7 +5,7 @@ const orgCtrl = require('./orgCtrl');
 const orgRoutes = module.exports = new Router();
 
 orgRoutes.get('/?', orgCtrl.validateIntake, (req, res) => {
-  res.sendFile(path.join(__dirname, '../../../src/intake.html'));
+  res.sendFile(path.join(__dirname, '../../../dist/intake.html'));
 });
 
 orgRoutes.get('/add?', orgCtrl.addOrg);

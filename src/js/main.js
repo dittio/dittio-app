@@ -1,17 +1,7 @@
+// AFTER DEVELOPMENT - SWITCH TO MINIFY JS
+
 (function ($) {
   "use strict"; // Start of use strict
-
-  // login form submission
-  $('#login-form').on('submit', function (event) {
-    event.preventDefault();
-    $.post('/user/login/', $(this).serialize())
-      .done(function (res) {
-        window.location.href = res.redirect;
-      })
-      .fail(function () {
-        alert('incorrect login or password');
-      });
-  });
 
   // jQuery for page scrolling feature - requires jQuery Easing plugin
   $('a.page-scroll').bind('click', function (event) {

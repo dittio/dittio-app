@@ -2,7 +2,7 @@ const kue = require('kue');
 const helper = require('sendgrid').mail;
 const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 
-const { REDIS_URL } = require('../../config');
+const { REDIS_URL } = require('../config');
 
 const queue = kue.createQueue({
   redis: REDIS_URL,

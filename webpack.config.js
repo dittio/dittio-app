@@ -5,7 +5,7 @@ module.exports = {
     './src/dashboard/index.jsx',
   ],
   output: {
-    path: path.join(__dirname, '/src/dashboard'),
+    path: path.join(__dirname, 'dist'),
     publicPath: '/',
     filename: 'bundle.js',
   },
@@ -25,6 +25,6 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    contentBase: './',
+    contentBase: path.join(__dirname, 'dist'),
   },
 };

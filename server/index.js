@@ -8,12 +8,26 @@ const passport = require('passport');
 const session = require('express-session');
 
 const dotenv = require('dotenv').config();
-const { PORT, SESSION_SECRET } = require('./config');
+const {
+  PORT,
+  SESSION_SECRET,
+} = require('./config');
 
-require('./services/jobConsumer/consumer')();
+
+// ==========================================================
+// Utility Inits ============================================
+// ==========================================================
+
+require('./util/fb-auth-init')();
+require('./util/consumer')();
 require('./util/passport')(passport);
 
-// session handling
+
+// ==========================================================
+// Session Handling + Middleware ============================
+// ==========================================================
+
+const { authenticateSession } = require('./services/users/userCtrl');
 app.use(session({ secret: SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -23,33 +37,49 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }), bodyParser.json());
 app.use(express.static(path.join(__dirname, '../src')));
 
+app.set('view engine', 'ejs');
 
-// Service-based routing import
+
+// ==========================================================
+// Importing Service Routes =================================
+// ==========================================================
+
 const contactRoutes = require('./services/contacts/contactRoutes');
-const userRoutes = require('./services/users/userRoutes')(passport);
+const userRoutes = require('./services/users/userRoutes');
 const orgRoutes = require('./services/org/orgRoutes');
 
 
-// REST Gateways
+// ==========================================================
+// REST Gateways ============================================
+// ==========================================================
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/index.html'));
+  // res.sendFile(path.join(__dirname, '../dist/index.html'));
+  res.render(path.join(__dirname, '../dist/index'));
 });
-// app.get('/dashboard', (req, res, next) => {
-//   if (req.isAuthenticated()) {
-//     next();
-//   } else {
-//     return res.redirect('/');
-//   }
-// }, (req, res) => res.sendFile(path.join(__dirname, '../src/dashboard/index.html')));
+
+app.get('/login', authenticateSession, (req, res) => {
+  res.render(path.join(__dirname, '../dist/login'));
+});
+
+app.get('/main', authenticateSession, (req, res) => {
+  res.render(path.join(__dirname, '../dist/dashboard'));
+});
+
+app.get('/bundle.js', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/bundle.js'));
+});
 
 app.use('/intake', orgRoutes);
 app.use('/contact', contactRoutes);
 app.use('/user', userRoutes);
 
 
-// Error catch-all
-app.all('*', (req, res) => res.status(404).end('Page Not Found!'));
+// ==========================================================
+// Error catch-all + Server spinup ==========================
+// ==========================================================
 
+app.all('*', (req, res) => res.status(404).end('Page Not Found!'));
 
 app.listen(PORT, () => {
   console.log(`ditt.io up and running on port ${PORT}!`);

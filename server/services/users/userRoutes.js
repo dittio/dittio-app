@@ -1,14 +1,16 @@
 const { Router } = require('express');
-const userCtrl = require('./userCtrl');
+const {
+  loginUser,
+  moveToSecret,
+  logoutUser,
+} = require('./userCtrl');
 
-const userRoute = new Router();
+const userRoute = module.exports = new Router();
 
-module.exports = (passport) => {
-  userRoute.post('/login', passport.authenticate('local-login'), userCtrl.loginUser);
+userRoute.post('/login', loginUser, moveToSecret);
 
-  userRoute.post('/', (req, res) => {
-    console.log('/signup route was hit!');
-  });
+userRoute.post('/logout', logoutUser);
 
-  return userRoute;
-};
+userRoute.post('/', (req, res) => {
+  console.log('PLACEHOLDER: SIGNUP ROUTE');
+});
