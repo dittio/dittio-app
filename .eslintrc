@@ -1,0 +1,10 @@
+{
+  "extends": "rallycoding",
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
+  "root": true,
+  "rules": { }
+}
